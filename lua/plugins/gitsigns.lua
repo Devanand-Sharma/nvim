@@ -23,7 +23,7 @@ return {
 		current_line_blame_opts = {
 			virt_text = true,
 			virt_text_pos = "eol",
-			delay = 1000,
+			delay = 10,
 		},
 		sign_priority = 6,
 		update_debounce = 100,
