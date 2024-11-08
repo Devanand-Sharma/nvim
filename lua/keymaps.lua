@@ -26,5 +26,8 @@ vim.keymap.set("n", "<leader>guh", function() require('gitsigns').reset_hunk() e
 vim.keymap.set("n", "<leader>ghh", function() require('gitsigns').prev_hunk() end)
 vim.keymap.set("n", "<leader>glh", function() require('gitsigns').next_hunk() end)
 
+-- Clear search highlight
+vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true })
+
 -- LaTeX
 vim.keymap.set("n", "<leader>cl", ":VimtexCompile<CR>")
