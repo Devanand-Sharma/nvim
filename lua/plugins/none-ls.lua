@@ -2,17 +2,43 @@ return {
 	"nvimtools/none-ls.nvim",
 	config = function()
 		local null_ls = require("null-ls")
+		
+		-- Configure formatters and diagnostics
+		local formatting = null_ls.builtins.formatting
+		local diagnostics = null_ls.builtins.diagnostics
+		local code_actions = null_ls.builtins.code_actions
+
 		null_ls.setup({
 			sources = {
-				null_ls.builtins.formatting.stylua,
-				null_ls.builtins.formatting.clang_format,
-				null_ls.builtins.formatting.black,
-				-- null_ls.builtins.formatting.latexindent,
-				null_ls.builtins.formatting.gofumpt,
-				null_ls.builtins.formatting.goimports_reviser,
-				null_ls.builtins.code_actions.gomodifytags,
-				null_ls.builtins.diagnostics.golangci_lint,
+				-- Lua
+				formatting.stylua,
+				
+				-- Python
+				formatting.black.with({ 
+					extra_args = { "--fast", "--line-length=88" } 
+				}),
+				formatting.isort,
+				-- Use ruff_lsp instead of null-ls for ruff
+				-- Ruff diagnostics will come from the LSP
+				
+				-- C/C++
+				formatting.clang_format.with({
+					extra_args = { 
+						"--style={BasedOnStyle: google, IndentWidth: 4, ColumnLimit: 100}"
+					},
+				}),
+				
+				-- Go
+				formatting.gofumpt,
+				formatting.goimports_reviser,
+				code_actions.gomodifytags,
+				diagnostics.golangci_lint,
 			},
+			-- Debug settings (optional, helps with troubleshooting)
+			debug = false,
+			log_level = "warn",
+			-- Increase timeout
+			format_timeout = 10000,
 		})
 	end,
 }

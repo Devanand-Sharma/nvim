@@ -13,6 +13,10 @@ return {
 					"texlab",
 					"gopls",
 					"golangci_lint_ls",
+					"pyright",
+					"ruff_lsp",
+					"clangd",
+					"cmake",
 				},
 			})
 		end,
@@ -25,75 +29,40 @@ return {
 
 			lspconfig.pyright.setup({
 				capabilities = capabilities,
-			})
-			lspconfig.lua_ls.setup({
-				capabilities = capabilities,
 				settings = {
-					Lua = {
-						diagnostics = {
-							globals = { "vim" },
+					python = {
+						analysis = {
+							autoSearchPaths = true,
+							useLibraryCodeForTypes = true,
+							diagnosticMode = "workspace",
 						},
 					},
 				},
 			})
+
+			lspconfig.ruff_lsp.setup({
+				capabilities = capabilities,
+				init_options = {
+					settings = {
+						args = {},
+					},
+				},
+			})
+
 			lspconfig.clangd.setup({
 				capabilities = capabilities,
-			})
-			lspconfig.texlab.setup({
-				capabilities = capabilities,
-				settings = {
-					texlab = {
-						auxDirectory = ".",
-						bibtexFormatter = "texlab",
-						build = {
-							args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-							executable = "latexmk",
-							forwardSearchAfter = false,
-							onSave = false,
-						},
-						diagnosticsDelay = 300,
-						formatterLineLength = 80,
-					},
-				},
-			})
-			lspconfig.dartls.setup({
-				capabilities = capabilities,
-			})
-
-			lspconfig.gopls.setup({
-				capabilities = capabilities,
-				settings = {
-					gopls = {
-						analyses = {
-							unusedparams = true,
-							shadow = true,
-							fieldalignment = true,
-							nilness = true,
-							unusedwrite = true,
-							useany = true,
-						},
-						staticcheck = true,
-						gofumpt = true,
-						usePlaceholders = true,
-						completeUnimported = true,
-						experimentalPostfixCompletions = true,
-						hints = {
-							assignVariableTypes = true,
-							compositeLiteralFields = true,
-							compositeLiteralTypes = true,
-							constantValues = true,
-							functionTypeParameters = true,
-							parameterNames = true,
-							rangeVariableTypes = true,
-						},
-					},
+				cmd = {
+					"clangd",
+					"--background-index",
+					"--clang-tidy",
+					"--header-insertion=iwyu",
+					"--completion-style=detailed",
+					"--function-arg-placeholders",
 				},
 			})
 
-			lspconfig.golangci_lint_ls.setup({
+			lspconfig.cmake.setup({
 				capabilities = capabilities,
-				filetypes = { "go", "gomod" },
-				root_dir = lspconfig.util.root_pattern(".git", "go.mod"),
 			})
 		end,
 	},
