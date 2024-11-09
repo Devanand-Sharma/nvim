@@ -8,7 +8,7 @@ vim.keymap.set("n", "<leader>th", ":Telescope colorscheme<CR>")
 
 -- Code formatting and editing
 vim.keymap.set("n", "<leader>ft", vim.lsp.buf.format, {})
-vim.keymap.set("n", "<C-/>", ":CommentToggle<CR>")
+vim.keymap.set("n", "<leader>/", ":CommentToggle<CR>")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
 vim.keymap.set("n", "d", '"_d')
