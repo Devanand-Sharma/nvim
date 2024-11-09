@@ -9,7 +9,11 @@ return {
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			require("mason-lspconfig").setup({
-				ensure_installed = { "texlab" },
+				ensure_installed = {
+					"texlab",
+					"gopls",
+					"golangci_lint_ls",
+				},
 			})
 		end,
 	},
@@ -55,8 +59,41 @@ return {
 			lspconfig.dartls.setup({
 				capabilities = capabilities,
 			})
+
 			lspconfig.gopls.setup({
 				capabilities = capabilities,
+				settings = {
+					gopls = {
+						analyses = {
+							unusedparams = true,
+							shadow = true,
+							fieldalignment = true,
+							nilness = true,
+							unusedwrite = true,
+							useany = true,
+						},
+						staticcheck = true,
+						gofumpt = true,
+						usePlaceholders = true,
+						completeUnimported = true,
+						experimentalPostfixCompletions = true,
+						hints = {
+							assignVariableTypes = true,
+							compositeLiteralFields = true,
+							compositeLiteralTypes = true,
+							constantValues = true,
+							functionTypeParameters = true,
+							parameterNames = true,
+							rangeVariableTypes = true,
+						},
+					},
+				},
+			})
+
+			lspconfig.golangci_lint_ls.setup({
+				capabilities = capabilities,
+				filetypes = { "go", "gomod" },
+				root_dir = lspconfig.util.root_pattern(".git", "go.mod"),
 			})
 		end,
 	},
