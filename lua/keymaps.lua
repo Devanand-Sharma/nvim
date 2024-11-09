@@ -11,8 +11,8 @@ vim.keymap.set("n", "<leader>ft", vim.lsp.buf.format, {})
 vim.keymap.set("n", "<C-/>", ":CommentToggle<CR>")
 vim.keymap.set("v", ">", ">gv")
 vim.keymap.set("v", "<", "<gv")
-vim.keymap.set('n', 'd', '"_d')
-vim.keymap.set('v', 'd', '"_d')
+vim.keymap.set("n", "d", '"_d')
+vim.keymap.set("v", "d", '"_d')
 
 -- Buffer management
 vim.keymap.set("n", "L", ":BufferNext<CR>")
@@ -21,13 +21,27 @@ vim.keymap.set("n", "<leader>bx", ":BufferClose<CR>")
 vim.keymap.set("n", "<leader>br", ":BufferRestore<CR>")
 
 -- Git operations
-vim.keymap.set("n", "<leader>gph", function() require('gitsigns').preview_hunk() end)
-vim.keymap.set("n", "<leader>guh", function() require('gitsigns').reset_hunk() end)
-vim.keymap.set("n", "<leader>ghh", function() require('gitsigns').prev_hunk() end)
-vim.keymap.set("n", "<leader>glh", function() require('gitsigns').next_hunk() end)
+vim.keymap.set("n", "<leader>gph", function()
+	require("gitsigns").preview_hunk()
+end)
+vim.keymap.set("n", "<leader>guh", function()
+	require("gitsigns").reset_hunk()
+end)
+vim.keymap.set("n", "<leader>ghh", function()
+	require("gitsigns").prev_hunk()
+end)
+vim.keymap.set("n", "<leader>glh", function()
+	require("gitsigns").next_hunk()
+end)
 
 -- Clear search highlight
-vim.keymap.set('n', '<Esc>', ':noh<CR>', { silent = true })
+vim.keymap.set("n", "<Esc>", ":noh<CR>", { silent = true })
 
--- LaTeX
-vim.keymap.set("n", "<leader>cl", ":VimtexCompile<CR>")
+-- LaTeX keymaps
+vim.keymap.set("n", "<leader>lc", ":VimtexCompile<CR>")
+vim.keymap.set("n", "<leader>lt", "<cmd>VimtexTocToggle<CR>")
+vim.keymap.set("n", "<leader>lv", "<cmd>VimtexView<CR>")
+vim.keymap.set("n", "<leader>ls", "<cmd>VimtexDocPackage<CR>")
+vim.keymap.set("n", "<leader>le", "<cmd>VimtexErrors<CR>")
+vim.keymap.set("n", "<leader>lk", "<cmd>VimtexClean<CR>")
+vim.keymap.set("n", "<leader>li", "<cmd>VimtexInfo<CR>")
