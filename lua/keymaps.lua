@@ -66,3 +66,8 @@ vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "Next diagn
 vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
 vim.keymap.set("n", "<leader>dd", vim.diagnostic.setloclist, { desc = "Document diagnostics" })
 vim.keymap.set("n", "<leader>dw", vim.diagnostic.setqflist, { desc = "Workspace diagnostics" })
+
+-- Session management
+vim.keymap.set("n", "<leader>ss", "<cmd>SessionSave<CR>", { desc = "Save session" })
+vim.keymap.set("n", "<leader>sl", "<cmd>SessionLoad<CR>", { desc = "Load session" })
+vim.keymap.set("n", "<leader>sd", "<cmd>SessionDelete<CR>", { desc = "Delete session" })
