@@ -68,9 +68,11 @@ return {
 			{ "<leader>dw", vim.diagnostic.setqflist, desc = "Workspace Diagnostics", mode = "n" },
 			-- Session management
 			{ "<leader>s", group = " Session" },
-			{ "<leader>ss", "<cmd>SessionSave<CR>", desc = " Save Session", mode = "n" },
-			{ "<leader>sl", "<cmd>SessionLoad<CR>", desc = " Load Session", mode = "n" },
-			{ "<leader>sd", "<cmd>SessionDelete<CR>", desc = " Delete Session", mode = "n" },
+			{ "<leader>ss", "<cmd>SessionSave<CR>", desc = "Save Session", mode = "n" },
+			{ "<leader>sl", "<cmd>SessionLoad<CR>", desc = "Load Session", mode = "n" },
+			{ "<leader>sd", "<cmd>SessionDelete<CR>", desc = "Delete Session", mode = "n" },
+			-- Neotree Toggle
+			{ "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", mode = "n" },
 		})      
     end,
   }
