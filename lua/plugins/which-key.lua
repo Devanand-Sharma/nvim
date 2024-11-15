@@ -73,6 +73,8 @@ return {
 			{ "<leader>sd", "<cmd>SessionDelete<CR>", desc = "Delete Session", mode = "n" },
 			-- Neotree Toggle
 			{ "<leader>e", "<cmd>Neotree toggle<CR>", desc = "Toggle Neotree", mode = "n" },
+			-- Python Interpreter Selector
+			{ "<leader>ps", "<cmd>SelectPythonInterpreter<CR>", desc = "󰌠 Select Python Interpreter", mode = "n" },
 		})      
     end,
   }

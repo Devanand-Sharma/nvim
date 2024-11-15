@@ -13,7 +13,6 @@ return {
 			-- Check for Python
 			if vim.fn.executable('python') == 1 or vim.fn.executable('python3') == 1 then
 				table.insert(servers, "pyright")
-				table.insert(servers, "ruff_lsp")
 			end
 
 			-- Check for C/C++
@@ -59,15 +58,6 @@ return {
 								useLibraryCodeForTypes = true,
 								diagnosticMode = "workspace",
 							},
-						},
-					},
-				})
-
-				lspconfig.ruff_lsp.setup({
-					capabilities = capabilities,
-					init_options = {
-						settings = {
-							args = {},
 						},
 					},
 				})

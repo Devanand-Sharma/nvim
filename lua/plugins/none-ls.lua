@@ -18,8 +18,7 @@ return {
 					extra_args = { "--fast", "--line-length=88" } 
 				}),
 				formatting.isort,
-				-- Use ruff_lsp instead of null-ls for ruff
-				-- Ruff diagnostics will come from the LSP
+
 				
 				-- C/C++
 				formatting.clang_format.with({
