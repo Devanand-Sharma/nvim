@@ -18,10 +18,5 @@ return {
                 previewer = false,
             },
         })
-
-        local keymap = vim.keymap.set
-        keymap("n", "<leader>ss", "<cmd>SessionSave<CR>", { desc = "Save session" })
-        keymap("n", "<leader>sl", "<cmd>SessionLoad<CR>", { desc = "Load session" })
-        keymap("n", "<leader>sd", "<cmd>SessionDelete<CR>", { desc = "Delete session" })
     end
 } 
