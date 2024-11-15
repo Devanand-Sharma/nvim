@@ -1,86 +1,40 @@
 return {
-    "nvim-telescope/telescope.nvim",
+    "AckslD/swenv.nvim",
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
     config = function()
-        local telescope = require("telescope")
-        local actions = require("telescope.actions")
-        local action_state = require("telescope.actions.state")
-        local pickers = require("telescope.pickers")
-        local finders = require("telescope.finders")
-        local conf = require("telescope.config").values
-
-        -- Function to find Python interpreters
-        local function find_python_interpreters()
-            local handle = io.popen([[
-                which -a python python3 2>/dev/null
-                find /usr/bin /usr/local/bin ~/anaconda3/bin ~/.conda/envs/*/bin ~/.pyenv/versions/*/bin -name "python*" 2>/dev/null
-            ]])
-            if not handle then return {} end
-            
-            local result = handle:read("*a")
-            handle:close()
-
-            local interpreters = {}
-            local seen = {}
-            for path in result:gmatch("[^\n]+") do
-                if not seen[path] and path:match("python[23]?$") then
-                    seen[path] = true
-                    table.insert(interpreters, path)
-                end
-            end
-            return interpreters
-        end
-
-        -- Function to select Python interpreter
-        local function select_python_interpreter()
-            local interpreters = find_python_interpreters()
-            
-            pickers.new({}, {
-                prompt_title = "Select Python Interpreter",
-                finder = finders.new_table({
-                    results = interpreters,
-                    entry_maker = function(entry)
-                        return {
-                            value = entry,
-                            display = entry,
-                            ordinal = entry,
+        require("swenv").setup({
+            -- Optional: Path to search for virtual environments
+            -- Default is parent directory of current file
+            venvs_path = vim.fn.expand("~/.conda/envs"),
+            -- Optional: Additional paths to search for virtual environments
+            additional_paths = {
+                vim.fn.expand("~/anaconda3/envs"),
+                vim.fn.expand("~/.pyenv/versions"),
+            },
+            -- Optional: Custom function to get python path from virtualenv
+            get_venv_python = function(venv_path)
+                return venv_path .. "/bin/python"
+            end,
+            -- Optional: Post-hook after activating an environment
+            post_set_venv = function()
+                -- Restart Pyright after environment change
+                vim.cmd("LspRestart")
+                -- Update Pyright's pythonPath
+                require('lspconfig').pyright.setup({
+                    settings = {
+                        python = {
+                            pythonPath = vim.fn.exepath("python")
                         }
-                    end,
-                }),
-                sorter = conf.generic_sorter({}),
-                attach_mappings = function(prompt_bufnr, _)
-                    actions.select_default:replace(function()
-                        local selection = action_state.get_selected_entry()
-                        actions.close(prompt_bufnr)
-                        
-                        -- Set the Python interpreter for the LSP
-                        if selection then
-                            -- Update Pyright configuration
-                            require('lspconfig').pyright.setup({
-                                settings = {
-                                    python = {
-                                        pythonPath = selection.value
-                                    }
-                                }
-                            })
-                            
-                            -- Restart Pyright
-                            vim.cmd("LspRestart")
-                            
-                            -- Notify user
-                            vim.notify("Python interpreter set to: " .. selection.value, 
-                                     vim.log.levels.INFO, 
-                                     { title = "Python Interpreter" })
-                        end
-                    end)
-                    return true
-                end,
-            }):find()
-        end
+                    }
+                })
+            end,
+        })
 
-        -- Add command to select interpreter
-        vim.api.nvim_create_user_command("SelectPythonInterpreter", select_python_interpreter, {})
+        -- Create command to open swenv picker
+        vim.api.nvim_create_user_command("SelectPythonInterpreter", function()
+            require("swenv.api").pick_venv()
+        end, {})
     end
 } 
