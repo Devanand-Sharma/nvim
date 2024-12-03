@@ -32,6 +32,36 @@ return {
 				formatting.goimports_reviser,
 				code_actions.gomodifytags,
 				diagnostics.golangci_lint,
+
+				-- TypeScript/JavaScript
+				formatting.prettier.with({
+					filetypes = {
+						"javascript",
+						"javascriptreact",
+						"typescript",
+						"typescriptreact",
+						"vue",
+						"css",
+						"scss",
+						"less",
+						"html",
+						"json",
+						"jsonc",
+						"yaml",
+						"markdown",
+						"markdown.mdx",
+						"graphql",
+						"handlebars",
+					},
+					extra_args = {
+						"--single-quote",
+						"--jsx-single-quote",
+						"--trailing-comma=es5",
+						"--arrow-parens=avoid",
+						"--print-width=100",
+						"--tab-width=2",
+					},
+				}),
 			},
 			-- Debug settings (optional, helps with troubleshooting)
 			debug = false,

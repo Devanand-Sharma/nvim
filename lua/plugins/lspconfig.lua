@@ -36,6 +36,12 @@ return {
 				table.insert(servers, "texlab")
 			end
 
+			-- Check for TypeScript/Node
+			if vim.fn.executable('node') == 1 then
+				table.insert(servers, "ts_ls")
+				table.insert(servers, "eslint")
+			end
+
 			require("mason-lspconfig").setup({
 				ensure_installed = servers,
 			})
@@ -80,6 +86,46 @@ return {
 			if vim.fn.executable('cmake') == 1 then
 				lspconfig.cmake.setup({
 					capabilities = capabilities,
+				})
+			end
+
+			if vim.fn.executable('node') == 1 then
+				lspconfig.ts_ls.setup({
+					capabilities = capabilities,
+					settings = {
+						typescript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							},
+						},
+						javascript = {
+							inlayHints = {
+								includeInlayParameterNameHints = "all",
+								includeInlayParameterNameHintsWhenArgumentMatchesName = false,
+								includeInlayFunctionParameterTypeHints = true,
+								includeInlayVariableTypeHints = true,
+								includeInlayPropertyDeclarationTypeHints = true,
+								includeInlayFunctionLikeReturnTypeHints = true,
+								includeInlayEnumMemberValueHints = true,
+							},
+						},
+					},
+				})
+
+				lspconfig.eslint.setup({
+					capabilities = capabilities,
+					on_attach = function(client, bufnr)
+						vim.api.nvim_create_autocmd("BufWritePre", {
+							buffer = bufnr,
+							command = "EslintFixAll",
+						})
+					end,
 				})
 			end
 		end,

@@ -9,6 +9,8 @@ return {
 				  "c", "cpp", "python", "lua", "vim", 
 				  "vimdoc", "javascript", "html", "go",
 				  "cmake", "make", "ninja", "rst", "toml",
+				  "typescript", "json", "yaml", "markdown",
+				  "bash", "sql", "dockerfile", "tsx"
 			  },
 			  sync_install = false,
 			  highlight = { 
